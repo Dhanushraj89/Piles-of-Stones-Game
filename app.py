@@ -100,104 +100,100 @@ def play():
     global current_player
 
     print(request.method)
-    if request.method == 'GET':
-        print('If condition')
-        return render_template('play.html')
-    else:
-        print('Else condition')
-        # Get the number of stones in each pile from the form
-        pile1 = int(pile_sizes[0])
-        pile2 = int(pile_sizes[1])
-        pile3 = int(pile_sizes[2])
+    print('Else condition')
+    # Get the number of stones in each pile from the form
+    pile1 = int(pile_sizes[0])
+    pile2 = int(pile_sizes[1])
+    pile3 = int(pile_sizes[2])
         
-        # Get the game settings from the form
-        # min_pick = int(request.form['max_take'])
-        # max_pick = int(request.form['min_take'])
-        # total_score = int(request.form['total_score'])
+    # Get the game settings from the form
+    # min_pick = int(request.form['max_take'])
+    # max_pick = int(request.form['min_take'])
+    # total_score = int(request.form['total_score'])
         
         
-        # Initialize the scores to 0
-        scores = {
+    # Initialize the scores to 0
+    scores = {
             player1: 0,
             player2: 0
-        }
-        # Play the game until one player reaches the total score
-        print("Play function called")
-        print(scores)
-        print(total_score_to_win)
-        print(pile_sizes)
-        print(player1)
-        print(player2)
-        while max(scores.values()) < int(total_score_to_win):
-            # Display the current state of the game
-            print(f'Player {current_player}\'s turn')
-            print(f'Pile 1: {pile1}, Pile 2: {pile2}, Pile 3: {pile3}')
-            print(f'Scores: {scores}')
+    }
+    # Play the game until one player reaches the total score
+    print("Play function called")
+    print(scores)
+    print(total_score_to_win)
+    print(pile_sizes)
+    print(player1)
+    print(player2)
+    while max(scores.values()) < int(total_score_to_win):
+        # Display the current state of the game
+        print(f'Player {current_player}\'s turn')
+        print(f'Pile 1: {pile1}, Pile 2: {pile2}, Pile 3: {pile3}')
+        print(f'Scores: {scores}')
             
-            # Wait for the players to make their move
-            while move is None or pile_num is None:
-                time.sleep(1)
+        # Wait for the players to make their move
+        while move is None or pile_num is None:
+            time.sleep(1)
             
-            # print(move, pile_num)
-            # Get the player's move from the form
-            # move = int(request.form[f'{current_player}_move'])
+        # print(move, pile_num)
+        # Get the player's move from the form
+        # move = int(request.form[f'{current_player}_move'])
             
-            # Validate the player's move
-            if move < min_pick or move > max_pick:
-                print(f'Invalid move: {move}')
-                move = None
-                pile_num = None
-                continue
-            
-            # Determine which pile the player is taking stones from
-            # pile_num = int(request.form[f'{current_player}_pile'])
-            if pile_num == 'pile1':
-                pile = pile1
-            elif pile_num == 'pile2':
-                pile = pile2
-            elif pile_num == 'pile3':
-                pile = pile3
-            else:
-                print(f'Invalid pile number: {pile_num}')
-                move = None
-                pile_num = None
-                continue
-            # print(pile)
-            # Validate the player's move based on the number of stones in the pile
-            if move > pile:
-                print(f'Invalid move: {move}')
-                move = None
-                pile_num = None
-                continue
-            
-            # Update the number of stones in the pile and the player's score
-            if pile_num == 'pile1':
-                pile1 -= move
-            elif pile_num == 'pile2':
-                pile2 -= move
-            elif pile_num == 'pile3':
-                pile3 -= move
-            scores[current_player] += move
-            
-            # Switch to the other player's turn
-            if current_player == player1:
-                current_player = player2
-            else:
-                current_player = player1
+        # Validate the player's move
+        if move < min_pick or move > max_pick:
+            print(f'Invalid move: {move}')
             move = None
             pile_num = None
-        
-        # Determine the winner
-        if scores[player1] > scores[player2]:
-            winner = player1
+            continue
+            
+        # Determine which pile the player is taking stones from
+        # pile_num = int(request.form[f'{current_player}_pile'])
+        if pile_num == 'pile1':
+            pile = pile1
+        elif pile_num == 'pile2':
+            pile = pile2
+        elif pile_num == 'pile3':
+            pile = pile3
         else:
-            winner = player2
+            print(f'Invalid pile number: {pile_num}')
+            move = None
+            pile_num = None
+            continue
+        # print(pile)
+        # Validate the player's move based on the number of stones in the pile
+        if move > pile:
+            print(f'Invalid move: {move}')
+            move = None
+            pile_num = None
+            continue
+            
+        # Update the number of stones in the pile and the player's score
+        if pile_num == 'pile1':
+            pile1 -= move
+        elif pile_num == 'pile2':
+            pile2 -= move
+        elif pile_num == 'pile3':
+            pile3 -= move
+        scores[current_player] += move
+            
+        # Switch to the other player's turn
+        if current_player == player1:
+            current_player = player2
+        else:
+            current_player = player1
+        move = None
+        pile_num = None
         
-        # Display the winner and final scores
-        print(f'{winner} wins!')
-        print(f'Final scores: {scores}')
+    # Determine the winner
+    if scores[player1] > scores[player2]:
+        winner = player1
+    else:
+        winner = player2
         
-        return render_template('result.html', winner=winner, player1=player1, player2=player2, score1=scores[player1], score2=scores[player2])
+    # Display the winner and final scores
+    print(f'{winner} wins!')
+    print(f'Final scores: {scores}')
+        
+    return render_template('result.html', winner=winner, player1=player1, player2=player2, score1=scores[player1], score2=scores[player2])
 
 @app.route('/')
 def index():
