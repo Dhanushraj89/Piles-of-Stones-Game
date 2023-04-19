@@ -95,12 +95,6 @@ def play():
     global player1
     global player2
     global current_player
-    print("PLay function called")
-    print(max(scores.values()))
-    print(total_score_to_win)
-    print(pile_sizes)
-    print(player1)
-    print(player2)
 
     if request.method == 'GET':
         return render_template('play.html')
@@ -122,6 +116,12 @@ def play():
             player2: 0
         }
         # Play the game until one player reaches the total score
+        print("PLay function called")
+        print(scores)
+        print(total_score_to_win)
+        print(pile_sizes)
+        print(player1)
+        print(player2)
         while max(scores.values()) < int(total_score_to_win):
             # Display the current state of the game
             print(f'Player {current_player}\'s turn')
