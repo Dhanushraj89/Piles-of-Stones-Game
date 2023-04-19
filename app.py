@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, url_for, redirect
-import time
+import time, logging
 
 app = Flask(__name__)
-
+logging.basicConfig(level=logging.DEBUG)
 # Game state variables
 starting_player = None
 pile_sizes = []
@@ -99,8 +99,8 @@ def playGame():
     global player2
     global current_player
 
-    print(request.method)
-    print('Else condition')
+    app.logger.debug(request.method)
+    app.logger.debug('Else condition')
     # Get the number of stones in each pile from the form
     pile1 = int(pile_sizes[0])
     pile2 = int(pile_sizes[1])
@@ -118,12 +118,12 @@ def playGame():
             player2: 0
     }
     # Play the game until one player reaches the total score
-    print("Play function called")
-    print(scores)
-    print(total_score_to_win)
-    print(pile_sizes)
-    print(player1)
-    print(player2)
+    app.logger.debug("Play function called")
+    app.logger.debug(scores)
+    app.logger.debug(total_score_to_win)
+    app.logger.debug(pile_sizes)
+    app.logger.debug(player1)
+    app.logger.debug(player2)
     while max(scores.values()) < int(total_score_to_win):
         # Display the current state of the game
         print(f'Player {current_player}\'s turn')
