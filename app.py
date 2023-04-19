@@ -54,8 +54,9 @@ def set_game_settings():
 
 @app.route('/playerOne', methods=['POST'])
 def playerOne():
-    global player1, current_player
+    global player1, player2, current_player
     player1 = request.form['player_name']
+    print('Player one func '+player1, player2)
     return render_template('playerOne.html', player1=player1, current_player=current_player)
 
 @app.route('/playerOneInput', methods=['POST'])
@@ -70,9 +71,10 @@ def playerOneInput():
 
 @app.route('/playerTwo', methods=['GET', 'POST'])
 def playerTwo():
-    global player2, current_player
+    global player1, player2, current_player
     player2 = request.form['player_name']
-    return render_template('playerTwo.html', player2=player2, current_player=current_player)
+    print('Player two func '+player1, player2)
+    return render_template('playerTwo.html', player2=player1, current_player=current_player)
 
 @app.route('/playerTwoInput', methods=['POST'])
 def playerTwoInput():
