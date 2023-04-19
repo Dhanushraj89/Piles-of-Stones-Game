@@ -189,7 +189,8 @@ def play():
 
 @app.route('/')
 def index():
-    return render_template('index.html', player1=player1)
+    # return render_template('index.html', player1=player1)
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
