@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Page</title>
+    <!-- Add any CSS styles or external libraries as needed -->
+    <style>
+
+      .button-container {
+        display: flex;
+        gap: 10px;
+      }
+
+      .button {
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        outline: none;
+      }
+
+      .button:hover {
+        background-color: #0056b3;
+      }
+
+      .button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+      .name-container {
+        display: none;
+        margin-top: 20px;
+      }
+
+      .name-container1 {
+        display: none;
+        margin-top: 20px;
+      }
+
+      .name-input {
+        padding: 5px;
+      }
+
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <!-- Add any JavaScript code as needed -->
+    <script>
+      function showNameInput() {
+        document.getElementById("name-container").style.display = "block";
+        document.getElementById("player1").disabled = false;
+        document.getElementById("player2").disabled = true;
+      }
+      function showNameInput1() {
+        document.getElementById("name-container1").style.display = "block";
+        document.getElementById("player1").disabled = true;
+        document.getElementById("player2").disabled = false;
+      }
+    </script>
+  </head>
+
+  <body>
+    {% include 'headers.html' %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="center" >Welcome to Piles of Stones Game</h1>
+          <h2>Login to your Account</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="button-container">
+            <button id="player1" class="button" onclick="showNameInput()" {% if player1 %}disabled{% endif %}>Player 1</button>
+            <button id="player2" class="button" onclick="showNameInput1()">Player 2</button>
+            <button class="button" onclick="location.href='/admin'">
+              Admin
+            </button>
+          </div>
+          <div class="form-group name-container" id="name-container">
+            <form action="/playerOne" method="post">
+              <label for="player_name">Enter your name:</label>
+              <input type="text" class="name-input" id="player_name" name="player_name">
+              <input class="button" type="submit" value="Start game">
+          </form>
+          </div>
+          <div class="form-group name-container1" id="name-container1">
+            <form action="/playerTwo" method="post">
+              <label for="player_name">Enter your name:</label>
+              <input type="text" class="name-input" id="player_name" name="player_name">
+              <input class="button" type="submit" value="Start game">
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stone Game</title>
+    <style>
+      /* Styling for the input fields */
+      input {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      /* Styling for the select fields */
+      select {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      /* Styling for the button */
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      /* Styling for the form */
+      form {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Stone Game: {{player1}}'s Page</h1>
+    <h2>{{current_player}}'s turn</h2>
+    <form action="/playerOneInput" method="post">
+      <label for="pile_select">Select a pile:</label>
+      <select id="pile_select" name="pile_select">
+        <option value="pile1">Pile 1</option>
+        <option value="pile2">Pile 2</option>
+        <option value="pile3">Pile 3</option>
+      </select><br>
+
+      <label for="stone_number">Enter the number of stones to remove:</label>
+      <input type="number" id="stone_number" name="stone_number"><br>
+
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+{% extends 'base.html' %} 
+
+{% block body %}
+  <div class="container">
+    <h1>Admin Page</h1>
+    <form method="post" action="{{ url_for('set_game_settings') }}">
+      <div class="form-group">
+        <label for="pile_size_1">Pile 1 Size:</label>
+        <input type="number" class="form-control" name="pile_size_1" id="pile_size_1" required>
+      </div>
+      <div class="form-group">
+        <label for="pile_size_2">Pile 2 Size:</label>
+        <input type="number" class="form-control" name="pile_size_2" id="pile_size_2" required>
+      </div>
+      <div class="form-group">
+        <label for="pile_size_3">Pile 3 Size:</label>
+        <input type="number" class="form-control" name="pile_size_3" id="pile_size_3" required>
+      </div>
+      <div class="form-group">
+        <label for="min_stones">Minimum Stones per Turn:</label>
+        <input type="number" class="form-control" name="min_stones" id="min_stones" required>
+      </div>
+      <div class="form-group">
+        <label for="max_stones">Maximum Stones per Turn:</label>
+        <input type="number" class="form-control" name="max_stones" id="max_stones" required>
+      </div>
+      <div class="form-group">
+        <label for="first_player">First Player:</label>
+        <select class="form-control" name="first_player" id="first_player">
+          <option value="player1">Player 1</option>
+          <option value="player2">Player 2</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="total_score_to_win">Total Score to Win:</label>
+        <input type="number" class="form-control" name="total_score_to_win" id="total_score_to_win" required>
+      </div>
+      <br/>
+      <button type="submit" class="btn btn-primary">Set Game Settings</button>
+    </form>
+
+    <form method="post" action="/play">
+      <button type="submit" class="btn btn-primary">Start game</button>
+    </form>
+{% endblock %}
