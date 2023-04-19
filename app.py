@@ -86,6 +86,12 @@ def playerTwoInput():
 
 @app.route('/play', methods=['GET', 'POST'])
 def play():
+    print("PLay function called")
+    print(max(scores.values()))
+    print(total_score_to_win)
+    print(pile_sizes)
+    print(player1)
+    print(player2)
     global min_pick
     global max_pick
     global winner
