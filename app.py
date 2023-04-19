@@ -96,9 +96,12 @@ def play():
     global player2
     global current_player
 
+    print(request.method)
     if request.method == 'GET':
+        print('If condition')
         return render_template('play.html')
     else:
+        print('Else condition')
         # Get the number of stones in each pile from the form
         pile1 = int(pile_sizes[0])
         pile2 = int(pile_sizes[1])
