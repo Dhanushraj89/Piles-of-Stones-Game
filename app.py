@@ -87,8 +87,8 @@ def playerTwoInput():
     else:
         return render_template('playerTwo.html', player2=player2, current_player=current_player)
 
-@app.route('/play', methods=['GET', 'POST'])
-def play():
+@app.route('/playGame', methods=['POST'])
+def playGame():
     global min_pick
     global max_pick
     global winner
