@@ -23,6 +23,7 @@ player2 = None
 move = None
 pile_num = None
 current_player = None
+winner = None
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
@@ -59,10 +60,13 @@ def playerOne():
 
 @app.route('/playerOneInput', methods=['POST'])
 def playerOneInput():
-    global player1, current_player
+    global player1, player2, current_player, pile_num, move, winner, scores
     pile_num = request.form['pile_select']
     move = int(request.form['stone_number'])
-    return render_template('playerOne.html', player1=player1, current_player=current_player)
+    if winner:
+        return render_template('result.html', winner=winner, player1=player1, player2=player2, score1=scores[player1], score2=scores[player2])
+    else:
+        return render_template('playerOne.html', player1=player1, current_player=current_player)
 
 @app.route('/playerTwo', methods=['GET', 'POST'])
 def playerTwo():
@@ -72,10 +76,13 @@ def playerTwo():
 
 @app.route('/playerTwoInput', methods=['POST'])
 def playerTwoInput():
-    global player2, current_player
+    global player1, player2, current_player, pile_num, move, winner, scores
     pile_num = request.form['pile_select']
     move = int(request.form['stone_number'])
-    return render_template('playerTwo.html', player2=player2, current_player=current_player)
+    if winner:
+        return render_template('result.html', winner=winner, player1=player1, player2=player2, score1=scores[player1], score2=scores[player2])
+    else:
+        return render_template('playerTwo.html', player2=player2, current_player=current_player)
 
 @app.route('/play', methods=['GET', 'POST'])
 def play():
@@ -93,9 +100,9 @@ def play():
         return render_template('play.html')
     else:
         # Get the number of stones in each pile from the form
-        pile1 = pile_sizes[0]
-        pile2 = pile_sizes[1]
-        pile3 = pile_sizes[2]
+        pile1 = int(pile_sizes[0])
+        pile2 = int(pile_sizes[1])
+        pile3 = int(pile_sizes[2])
         
         # Get the game settings from the form
         # min_pick = int(request.form['max_take'])
@@ -114,13 +121,12 @@ def play():
             print(f'Player {current_player}\'s turn')
             print(f'Pile 1: {pile1}, Pile 2: {pile2}, Pile 3: {pile3}')
             print(f'Scores: {scores}')
-            print(max(scores.values()))
             
-            print('current_player '+current_player)
             # Wait for the players to make their move
             while move is None or pile_num is None:
                 time.sleep(1)
             
+            # print(move, pile_num)
             # Get the player's move from the form
             # move = int(request.form[f'{current_player}_move'])
             
@@ -133,18 +139,18 @@ def play():
             
             # Determine which pile the player is taking stones from
             # pile_num = int(request.form[f'{current_player}_pile'])
-            if pile_num == 1:
+            if pile_num == 'pile1':
                 pile = pile1
-            elif pile_num == 2:
+            elif pile_num == 'pile2':
                 pile = pile2
-            elif pile_num == 3:
+            elif pile_num == 'pile3':
                 pile = pile3
             else:
                 print(f'Invalid pile number: {pile_num}')
                 move = None
                 pile_num = None
                 continue
-            
+            # print(pile)
             # Validate the player's move based on the number of stones in the pile
             if move > pile:
                 print(f'Invalid move: {move}')
@@ -179,11 +185,7 @@ def play():
         print(f'{winner} wins!')
         print(f'Final scores: {scores}')
         
-        return redirect(url_for('result', winner=winner, scores=scores))
-
-@app.route('/result')
-def result():
-    return render_template('result.html', winner=winner, scores=scores)
+        return render_template('result.html', winner=winner, player1=player1, player2=player2, score1=scores[player1], score2=scores[player2])
 
 @app.route('/')
 def index():
