@@ -74,7 +74,7 @@ def playerTwo():
     global player1, player2, current_player
     player2 = request.form['player_name']
     print('Player two func '+player1, player2)
-    return render_template('playerTwo.html', player2=player1, current_player=current_player)
+    return render_template('playerTwo.html', test=player1, player2=player2, current_player=current_player)
 
 @app.route('/playerTwoInput', methods=['POST'])
 def playerTwoInput():
@@ -121,7 +121,7 @@ def play():
             player2: 0
         }
         # Play the game until one player reaches the total score
-        print("PLay function called")
+        print("Play function called")
         print(scores)
         print(total_score_to_win)
         print(pile_sizes)
