@@ -27,6 +27,7 @@ winner = None
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
+    global scores, total_score_to_win, pile_sizes, player1, player2
     return render_template('admin.html')
 
 @app.route('/set_game_settings', methods=['POST'])
