@@ -42,12 +42,21 @@
     </style>
   </head>
   <body>
-    <h1>Guess Game: {{player1}}'s Page</h1>
-    <form action="/playerOneInput" method="post">
-      <label for="stone_number">Enter the secret value:</label>
+    <h1>Stone Game: {{player2}}'s Page</h1>
+    <h3>{{test}}</h3>
+    <h2>{{current_player}}'s turn</h2>
+    <form action="/playerTwoInput" method="post">
+      <label for="pile_select">Select a pile:</label>
+      <select id="pile_select" name="pile_select">
+        <option value="pile1">Pile 1</option>
+        <option value="pile2">Pile 2</option>
+        <option value="pile3">Pile 3</option>
+      </select><br>
+
+      <label for="stone_number">Enter the number of stones to remove:</label>
       <input type="number" id="stone_number" name="stone_number"><br>
+
       <input type="submit" value="Submit">
     </form>
   </body>
 </html>
-

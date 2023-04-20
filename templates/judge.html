@@ -1,0 +1,22 @@
+{% extends 'base.html' %} 
+
+{% block body %}
+  <div class="container">
+    <h1>Judge Page</h1>
+    <form method="post" action="{{ url_for('set_game_settings') }}">
+      <div class="form-group">
+        <label for="pile_size_1">Range 1:</label>
+        <input type="number" class="form-control" name="pile_size_1" id="pile_size_1" required>
+      </div>
+      <div class="form-group">
+        <label for="pile_size_2">Range 2:</label>
+        <input type="number" class="form-control" name="pile_size_2" id="pile_size_2" required>
+      </div>
+      <div class="form-group">
+        <label for="total_score_to_win">Tolerance</label>
+        <input type="number" class="form-control" name="total_score_to_win" id="total_score_to_win" required>
+      </div>
+      <br/>
+      <button type="submit" class="btn btn-primary">Set Game Settings</button>
+    </form>
+{% endblock %}
