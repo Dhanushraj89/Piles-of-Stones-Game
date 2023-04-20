@@ -17,16 +17,17 @@ game_timer = None
 scores = {}
 round_start_time = None
 round_end_time = None
-total_score_to_win = None
+total_score_to_win = -1
 player1 = None
 player2 = None
-move = None
+move = -1
 pile_num = None
 current_player = None
 winner = None
 guess = None
 score = 0
 timer = 0
+feedback = None
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
@@ -83,18 +84,23 @@ def playerTwo():
 
 @app.route('/playerTwoInput', methods=['POST'])
 def playerTwoInput():
-    global player1, player2, current_player, pile_num, move, winner, scores, score
+    global player1, player2, current_player, pile_num, move, winner, scores, score, total_score_to_win
     # pile_num = request.form['pile_select']
     # move = int(request.form['stone_number'])
-    while score > 0:
+    while score <= 0:
         guess = int(request.form['guess'])
-        if abs(guess - move) <= total_score_to_win:
-            if guess == move:
+        if abs(guess - int(move)) <= total_score_to_win:
+            if guess == int(move):
                 score += 50
             else:
                 score += 10
-        return render_template('playerTwo.html', test=player1, player2=player2, current_player=current_player)
-    
+        if guess < move:
+            feedback = 'High'
+        else:
+            feedback = 'Low'
+        if score <= 0:
+            return render_template('playerTwo.html', test=player1, player2=player2, current_player=current_player, score=score, feedback=feedback)
+    return render_template('result.html', score=score)
     
     # if winner:
     #     return render_template('result.html', winner=winner, player1=player1, player2=player2, score1=scores[player1], score2=scores[player2])
