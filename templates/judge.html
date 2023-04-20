@@ -1,23 +1,4 @@
 {% extends 'base.html' %} {% block body %}
-<h3>Countdown Timer</h3><p>Time Remaining: <span id="countdown"></span></p>
-<script>
-  // get the remaining time from Flask
-  var time_remaining = {{ time_remaining }};
-
-  // display the remaining time
-  var countdown_element = document.getElementById("countdown");
-  countdown_element.innerHTML = time_remaining;
-
-  // start the countdown timer
-  var countdown_interval = setInterval(function() {
-      time_remaining--;
-      countdown_element.innerHTML = time_remaining;
-      if (time_remaining <= 0) {
-          clearInterval(countdown_interval);
-          alert("Time's up!");
-      }
-  }, 1000);
-</script>
 <div class="container">
   <h1>Judge Page</h1>
   <h3>Player 1: {{player1}}</h3>
@@ -64,7 +45,29 @@
       />
     </div>
     <br />
-    <button type="submit" class="btn btn-primary">Set Game Settings</button>
+    <button type="submit" id="start-button" class="btn btn-primary">Set Game Settings</button>
   </form>
   {% endblock %}
 </div>
+<script>
+    // get the remaining time from Flask
+    var time_remaining = {{ time_remaining }};
+  
+    // display the remaining time
+    var countdown_element = document.getElementById("countdown");
+    countdown_element.innerHTML = time_remaining;
+  
+    // start the countdown timer
+    var countdown_interval;
+  
+    document.getElementById("start-button").addEventListener("click", function() {
+      countdown_interval = setInterval(function() {
+        time_remaining--;
+        countdown_element.innerHTML = time_remaining;
+        if (time_remaining <= 0) {
+          clearInterval(countdown_interval);
+          alert("Time's up!");
+        }
+      }, 1000);
+    });
+  </script>
