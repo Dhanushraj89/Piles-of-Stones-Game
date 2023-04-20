@@ -25,12 +25,14 @@ pile_num = None
 current_player = None
 winner = None
 guess = None
+score = 0
+timer = 0
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     global scores, total_score_to_win, pile_sizes, player1, player2
     # return render_template('admin.html', scores=scores, total_score_to_win=total_score_to_win, pile_sizes=pile_sizes, player1=player1, player2=player2)
-    return render_template('judge.html')
+    return render_template('judge.html', player1=player1, player2=player2, time_remaining=timer)
 
 @app.route('/set_game_settings', methods=['POST'])
 def set_game_settings():
@@ -40,11 +42,12 @@ def set_game_settings():
     global current_player
     global total_score_to_win
     global player1
-    global player2
+    global player2, timer
     
     pile_sizes.append(request.form['pile_size_1'])
     pile_sizes.append(request.form['pile_size_2'])
-    # pile_sizes.append(request.form['pile_size_3'])
+    pile_sizes.append(request.form['pile_size_3'])
+    timer = pile_sizes[2]
     # min_pick = int(request.form['min_stones'])
     # max_pick = int(request.form['max_stones'])
     # if request.form['first_player'] == 'player1':
@@ -52,15 +55,15 @@ def set_game_settings():
     # else:
     #     current_player = player2
     total_score_to_win = int(request.form['total_score_to_win'])
+    return render_template('judge.html', player1=player1, player2=player2, time_remaining=timer)
     return redirect(url_for('admin'))
 
 
 @app.route('/playerOne', methods=['POST'])
 def playerOne():
-    global player1, player2, current_player
+    global player1, player2, current_player, timer
     player1 = request.form['player_name']
-    print('Player one func '+player1, player2)
-    return render_template('playerOne.html', player1=player1, current_player=current_player)
+    return render_template('playerOne.html', player1=player1, player2=player2, current_player=current_player, time_remaining=timer)
 
 @app.route('/playerOneInput', methods=['POST'])
 def playerOneInput():
@@ -74,20 +77,29 @@ def playerOneInput():
 
 @app.route('/playerTwo', methods=['GET', 'POST'])
 def playerTwo():
-    global player1, player2, current_player
+    global player1, player2, current_player, timer
     player2 = request.form['player_name']
-    return render_template('playerTwo.html', test=player1, player2=player2, current_player=current_player)
+    return render_template('playerTwo.html', player1=player1, player2=player2, current_player=current_player, time_remaining=timer)
 
 @app.route('/playerTwoInput', methods=['POST'])
 def playerTwoInput():
-    global player1, player2, current_player, pile_num, move, winner, scores
+    global player1, player2, current_player, pile_num, move, winner, scores, score
     # pile_num = request.form['pile_select']
     # move = int(request.form['stone_number'])
-    guess = int(request.form['guess'])
-    if winner:
-        return render_template('result.html', winner=winner, player1=player1, player2=player2, score1=scores[player1], score2=scores[player2])
-    else:
-        return render_template('playerTwo.html', player2=player2, current_player=current_player)
+    while score > 0:
+        guess = int(request.form['guess'])
+        if abs(guess - move) <= total_score_to_win:
+            if guess == move:
+                score += 50
+            else:
+                score += 10
+        return render_template('playerTwo.html', test=player1, player2=player2, current_player=current_player)
+    
+    
+    # if winner:
+    #     return render_template('result.html', winner=winner, player1=player1, player2=player2, score1=scores[player1], score2=scores[player2])
+    # else:
+    #     return render_template('playerTwo.html', player2=player2, current_player=current_player)
 
 
 # @app.route('/playGame', methods=['POST'])

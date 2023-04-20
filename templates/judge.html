@@ -1,22 +1,70 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %} {% block body %}
+<h3>Countdown Timer</h3><p>Time Remaining: <span id="countdown"></span></p>
+<script>
+  // get the remaining time from Flask
+  var time_remaining = {{ time_remaining }};
 
-{% block body %}
-  <div class="container">
-    <h1>Judge Page</h1>
-    <form method="post" action="{{ url_for('set_game_settings') }}">
-      <div class="form-group">
-        <label for="pile_size_1">Range 1:</label>
-        <input type="number" class="form-control" name="pile_size_1" id="pile_size_1" required>
-      </div>
-      <div class="form-group">
-        <label for="pile_size_2">Range 2:</label>
-        <input type="number" class="form-control" name="pile_size_2" id="pile_size_2" required>
-      </div>
-      <div class="form-group">
-        <label for="total_score_to_win">Tolerance</label>
-        <input type="number" class="form-control" name="total_score_to_win" id="total_score_to_win" required>
-      </div>
-      <br/>
-      <button type="submit" class="btn btn-primary">Set Game Settings</button>
-    </form>
-{% endblock %}
+  // display the remaining time
+  var countdown_element = document.getElementById("countdown");
+  countdown_element.innerHTML = time_remaining;
+
+  // start the countdown timer
+  var countdown_interval = setInterval(function() {
+      time_remaining--;
+      countdown_element.innerHTML = time_remaining;
+      if (time_remaining <= 0) {
+          clearInterval(countdown_interval);
+          alert("Time's up!");
+      }
+  }, 1000);
+</script>
+<div class="container">
+  <h1>Judge Page</h1>
+  <h3>Player 1: {{player1}}</h3>
+  <h3>Player 2: {{player2}}</h3>
+  <form method="post" action="{{ url_for('set_game_settings') }}">
+    <div class="form-group">
+      <label for="pile_size_1">Range 1:</label>
+      <input
+        type="number"
+        class="form-control"
+        name="pile_size_1"
+        id="pile_size_1"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="pile_size_2">Range 2:</label>
+      <input
+        type="number"
+        class="form-control"
+        name="pile_size_2"
+        id="pile_size_2"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="pile_size_3">Timer:</label>
+      <input
+        type="number"
+        class="form-control"
+        name="pile_size_3"
+        id="pile_size_3"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="total_score_to_win">Tolerance</label>
+      <input
+        type="number"
+        class="form-control"
+        name="total_score_to_win"
+        id="total_score_to_win"
+        required
+      />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Set Game Settings</button>
+  </form>
+  {% endblock %}
+</div>
