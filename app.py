@@ -74,6 +74,7 @@ def start_timer():
     start_time = int(time.time() * 1000)
     return jsonify({'message': 'Timer started', 'start_time': start_time})
 
+
 @app.route('/get_global_value')
 def get_global_value():
     global time_left # replace this with your own function to get the global value
