@@ -93,7 +93,7 @@ def playerOne():
     global player1, player2, current_player, timer, start_time, time_left
     player1 = player1 or request.form['player_name']
     time_left = time_left or 30
-    return render_template('playerOne.html', player1=player1, player2=player2, current_player=current_player, time_left=time_left)
+    return render_template('playerOne.html', player1=player1, player2=player2, current_player=current_player, score1=score1, time_left=time_left)
 
 @app.route('/playerOneInput', methods=['POST'])
 def playerOneInput():
@@ -101,13 +101,13 @@ def playerOneInput():
     # pile_num = request.form['pile_select']
     move = int(request.form['stone_number'])
     time_left = int(request.form['time_left'])
-    return redirect(url_for('playerOne', player1=player1, player2=player2, current_player=current_player, time_left=time_left))
+    return redirect(url_for('playerOne', player1=player1, player2=player2, current_player=current_player, score1=score1, time_left=time_left))
 
 @app.route('/playerTwo', methods=['GET', 'POST'])
 def playerTwo():
-    global player1, player2, current_player, timer, start_time, time_left
+    global player1, player2, current_player, timer, start_time, time_left, score2
     player2 = player2 or request.form['player_name']
-    return render_template('playerTwo.html', player1=player1, player2=player2, current_player=current_player, time_left=time_left)
+    return render_template('playerTwo.html', player1=player1, player2=player2, current_player=current_player, score2=score2, time_left=time_left)
 
 @app.route('/playerTwoInput', methods=['POST'])
 def playerTwoInput():
@@ -120,7 +120,7 @@ def playerTwoInput():
     else:
         score2 += 1
     print(score1, score2)
-    return redirect(url_for('playerTwo', player1=player1, player2=player2, current_player=current_player, time_left=time_left))
+    return redirect(url_for('playerTwo', player1=player1, player2=player2, current_player=current_player, score2=score2, time_left=time_left))
 
     while score <= 0:
         guess = int(request.form['guess'])
