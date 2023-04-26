@@ -78,9 +78,9 @@
           <div class="button-container">
             <button id="player1" class="button" onclick="showNameInput()" {% if player1 %}disabled{% endif %}>Player 1</button>
             <button id="player2" class="button" onclick="showNameInput1()">Player 2</button>
-            <button class="button" onclick="location.href='/admin'">
+            {#<button class="button" onclick="location.href='/admin'">
               Judge
-            </button>
+            </button>#}
           </div>
           <div class="form-group name-container" id="name-container">
             <form action="/playerOne" method="post">

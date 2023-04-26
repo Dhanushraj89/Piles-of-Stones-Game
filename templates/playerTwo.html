@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Stone Game</title>
+    <title>Game</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
       /* Styling for the input fields */
       input {
@@ -42,14 +43,35 @@
     </style>
   </head>
   <body>
-    <h1>Guess Game: {{player2}}'s Page</h1>
+    <script>
+      window.onload = function() {
+        console.log(document.getElementById("time_left").value);
+        if (document.getElementById("time_left").value < 30) {
+          startTimer();
+        }
+      };      
+      function startTimer() {
+          let timeLeft = document.getElementById("time_left").value;
+          let timer = setInterval(function() {
+              timeLeft--;
+              document.getElementById("timer").textContent = timeLeft;
+              document.getElementById("time_left").value = timeLeft;
+              if (timeLeft == 0) {
+                  clearInterval(timer);
+                  window.location.href = "/result";
+              }
+          }, 1000);
+      }
+  </script>
+    <h1>Game: {{player2}}'s Page</h1>
     <h3>Player 1: {{player1}}</h3>
     <h3>Player 2: {{player2}}</h3>
-    <h3>Score: {{score}}</h3>
-    <h3>feedback: {{feedback}}</h3>
+    <h3>Score : {{score2}}</h3>
+    <p>Time remaining: <span id="timer">{{time_left}}</span> seconds</p>
     <form action="/playerTwoInput" method="post">
-      <label for="guess">Guess the number:</label>
-      <input type="number" id="guess" name="guess"><br>
+      <label for="guess">Enter the number:</label>
+      <input type="number" id="guess" min="-1000" max="1000" name="guess"><br>
+      <input type="hidden" id="time_left" name="time_left" value="{{ time_left }}" />
       <input type="submit" value="Submit">
     </form>
   </body>

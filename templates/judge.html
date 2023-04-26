@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block body %}
+<h3>Countdown Timer</h3><p>Time Remaining: <span id="countdown"></span>{{time_remaining}}</p>
 <div class="container">
   <h1>Judge Page</h1>
   <h3>Player 1: {{player1}}</h3>
@@ -47,6 +48,8 @@
     <br />
     <button type="submit" id="start-button" class="btn btn-primary">Set Game Settings</button>
   </form>
+  <br />
+  <button type="submit" id="start-timer" class="btn btn-primary">Start timer</button>
   {% endblock %}
 </div>
 <script>
@@ -60,7 +63,7 @@
     // start the countdown timer
     var countdown_interval;
   
-    document.getElementById("start-button").addEventListener("click", function() {
+    document.getElementById("start-timer").addEventListener("click", function() {
       countdown_interval = setInterval(function() {
         time_remaining--;
         countdown_element.innerHTML = time_remaining;
