@@ -74,6 +74,18 @@ def start_timer():
     start_time = int(time.time() * 1000)
     return jsonify({'message': 'Timer started', 'start_time': start_time})
 
+@app.route('/get_global_value')
+def get_global_value():
+    global time_left # replace this with your own function to get the global value
+    return jsonify(global_value=time_left)
+
+@app.route("/myFlaskRoute", methods=["POST"])
+def myFlaskRoute():
+    global time_left
+    data = request.form.get("myData")
+    time_left = data
+    return "Data received from JavaScript"
+
 @app.route('/stream_time')
 def stream_time():
     def generate():

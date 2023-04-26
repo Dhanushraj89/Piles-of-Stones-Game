@@ -62,6 +62,27 @@
               }
           }, 1000);
       }
+      function sendDataToFlask(data) {
+        $.ajax({
+          type: "POST",
+          url: "/myFlaskRoute",
+          data: { myData: data },
+          success: function(response) {
+            console.log("Data sent to Flask: " + data);
+          },
+          error: function(xhr, status, error) {
+            console.log("Error sending data to Flask: " + error);
+          }
+        });
+      }
+      setInterval(function() {
+        // Code to get your data
+        let data = document.getElementById("time_left").value;
+        console.log(data)
+        $(document).ready(function() {
+          sendDataToFlask(data);
+        });
+      }, 500);
   </script>
     <h1> Game: {{player1}}'s Page</h1>
     <h3>Player 1: {{player1}}</h3>

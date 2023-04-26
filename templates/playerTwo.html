@@ -62,6 +62,19 @@
               }
           }, 1000);
       }
+      function updateGlobalValue() {
+        $.ajax({
+            url: '/get_global_value',
+            dataType: 'json',
+            success: function(data) {
+              if(data.global_value<=2){
+                window.location.href = "/result";
+              }
+              document.getElementById("timer").textContent = data.global_value;
+            }
+        });
+    }
+    setInterval(updateGlobalValue, 500);
   </script>
     <h1>Game: {{player2}}'s Page</h1>
     <h3>Player 1: {{player1}}</h3>
