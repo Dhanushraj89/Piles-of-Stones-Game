@@ -1,2 +1,66 @@
-{{player1}}:{{score1}}
-{{player2}}:{{score2}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Result Page</title>
+    <style>
+      body {
+      	background-color: white;
+      	color: black;
+      	font-size: 24px;
+      	font-family: Arial, sans-serif;
+      }
+
+      .container {
+      	width: 80%;
+      	margin: 0 auto;
+      	padding: 40px;
+      	background-color: white;
+      	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      	border-radius: 10px;
+      	display: flex;
+      	flex-direction: column;
+      	align-items: center;
+      	justify-content: center;
+      }
+
+      .result {
+      	margin-top: 20px;
+      	display: flex;
+      	flex-direction: row;
+      	align-items: center;
+      	justify-content: space-between;
+      	width: 100%;
+      }
+
+      .player1 {
+      	background-color: {% if score1 > score2 %} green {% else %} red {% endif %};
+      	padding: 10px;
+      	border-radius: 5px;
+      }
+
+      .player2 {
+      	background-color: {% if score2 > score1 %} green {% else %} red {% endif %};
+      	padding: 10px;
+      	border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Result</h1>
+      <div class="result">
+        <div class="player1">{{player1}}:{{score1}}</div>
+        <div class="player2">{{player2}}:{{score2}}</div>
+      </div>
+      {% if score1 > score2 %}
+      <div class="player1">{{player1}} wins</div>
+      {% elif score1 < score2 %}
+      <div class="player2">{{player2}} wins</div>
+      {% else %}
+      <div class="tie">
+        {{player1}}:{{score1}} - {{player2}}:{{score2}} - Tie
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
